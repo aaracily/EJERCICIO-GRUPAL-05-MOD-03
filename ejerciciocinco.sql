@@ -21,20 +21,9 @@ id_usuario int not null ,
 fecha_hora_ingreso timestamp default current_timestamp, 
 foreign key (id_usuario) references usuario (id_usuario)
 );
--- 6  Creen una nueva tabla llamada Contactos (id_contacto, id_usuario, numero de telefono, correo electronico).
-create table contacto(
-id_contacto int  primary key auto_increment,
-id_usuario int not null,
-numero_telefono VARCHAR(50) NOT NULL,
-correo_electronico VARCHAR(50)
-);
--- 7 Modifique la columna teléfono de contacto, para crear un vínculo entre la tabla Usuarios y la tabla Contactos.
-alter table contacto
-    modify column numero_telefono VARCHAR(50) NOT NULL,
-    add foreign key (id_usuario) references usuario(id_usuario);
 
 -- 3
-UPDATE ingresoU SET fecha_hora_ingreso = CONVERT_TZ(fecha_hora_ingreso, '-03:00', '-02:00');
+UPDATE ingresoU SET fecha_hora_ingreso = CONVERT_TZ(fecha_hora_ingreso, '-03:00', '-02:00') WHERE id_ingreso = 1;
 
 -- 4 cree 8 registros para cada tabla 
 insert into usuario ( nombre, apellido, contrasena, genero , telefono)
@@ -59,7 +48,6 @@ values (1,now()),
 
 select * from usuario;
 select * from ingresoU;
-select * from contacto;
 
 /*
 -- 5 justifique el tipo de dato utilizado 
@@ -75,5 +63,18 @@ finalizar se utilizó el tipo de dato timestamp para obtener la fecha y la hora 
 Todos los tipos de datos ingresados son óptimos para el uso de la base de datos.
 */
 
+-- 6  Creen una nueva tabla llamada Contactos (id_contacto, id_usuario, numero de telefono, correo electronico).
+create table contacto(
+id_contacto int  primary key auto_increment,
+id_usuario int not null,
+numero_telefono VARCHAR(50) NOT NULL,
+correo_electronico VARCHAR(50)
+);
 
+select * from contacto;
+
+-- 7 Modifique la columna teléfono de contacto, para crear un vínculo entre la tabla Usuarios y la tabla Contactos.
+alter table contacto
+    modify column numero_telefono VARCHAR(50) NOT NULL,
+    add foreign key (id_usuario) references usuario(id_usuario);
 
